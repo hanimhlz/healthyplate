@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthyPlate – Rekomendasi Menu Sehat</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .main-card {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: none;
+            overflow: hidden;
+            background: white;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #2E8B57 0%, #3CB371 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header-bg h1 { font-weight: 600; margin-bottom: 8px; font-size: 2rem; }
+        .header-bg p { font-size: 1.1rem; opacity: 0.9; }
+        .form-section { padding: 40px 50px; }
+        .form-label { font-weight: 500; color: #555; margin-bottom: 6px; font-size: 0.95rem; }
+        
+        /* Styling Input & Validasi */
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 12px 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #3CB371;
+            box-shadow: 0 0 0 0.2rem rgba(60, 179, 113, 0.25);
+        }
+        /* Style untuk input yang tidak valid */
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
+        .invalid-feedback {
+            display: none;
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+        .form-control.is-invalid ~ .invalid-feedback { display: block; }
+
+        /* Tombol */
+        .btn-submit {
+            background-color: #2E8B57; color: white; font-weight: 600;
+            padding: 14px; border-radius: 10px; width: 100%; font-size: 1.05rem;
+            transition: all 0.3s; border: none;
+        }
+        .btn-submit:hover { background-color: #246b43; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(46, 139, 87, 0.3); }
+        .btn-submit:disabled { background-color: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        .btn-reset {
+            background-color: #fff; color: #dc3545; border: 2px solid #dc3545;
+            font-weight: 600; padding: 14px; border-radius: 10px; width: 100%; font-size: 1.05rem; transition: all 0.3s;
+        }
+        .btn-reset:hover { background-color: #dc3545; color: white; transform: translateY(-2px); }
+
+        .allergy-group label { font-weight: 400; margin-right: 15px; cursor: pointer; padding: 8px 12px; border-radius: 8px; transition: background 0.2s; }
+        .allergy-group label:hover { background-color: #f8f9fa; }
+        .error-alert { border-radius: 12px; margin: 20px auto; max-width: 960px; width: 100%; }
+
+        @media (max-width: 768px) {
+            .form-section { padding: 25px 20px; }
+            .header-bg { padding: 30px 20px; }
+            .header-bg h1 { font-size: 1.6rem; }
+            body { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    {% if error %}
+    <div class="alert alert-danger error-alert text-center" role="alert">
+        ⚠️ {{ error }}
+    </div>
+    {% endif %}
+
+    <div class="card main-card">
+        <div class="header-bg">
+            <h1>🥗 HealthyPlate</h1>
+            <p class="mb-0">Rekomendasi Menu Diet Hipertensi</p>
+        </div>
+        
+        <div class="form-section">
+            <p class="text-muted mb-4 text-center" style="font-size: 1.05rem;">
+                Isi data kesehatan Anda untuk mendapatkan meal plan selama 7 hari.
+            </p>
+            
+            <form action="/recommend" method="POST" id="dietForm" novalidate>
+                <div class="row g-4">
+                    <!-- Data Demografi -->
+                    <div class="col-md-6">
+                        <label for="age" class="form-label">Umur (Tahun)</label>
+                        <input type="number" class="form-control" id="age" name="age" min="18" max="100" required placeholder="Contoh: 45">
+                        <div class="invalid-feedback">Umur harus antara 18 - 100 tahun.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="gender" class="form-label">Jenis Kelamin</label>
+                        <select class="form-select" id="gender" name="gender" required>
+                            <option value="" selected disabled>Pilih jenis kelamin</option>
+                            <option value="male">Laki-laki</option>
+                            <option value="female">Perempuan</option>
+                        </select>
+                        <div class="invalid-feedback">Jenis kelamin wajib dipilih.</div>
+                    </div>
+
+                    <!-- Data Fisik dengan Validasi -->
+                    <div class="col-md-6">
+                        <label for="height" class="form-label">Tinggi Badan (cm)</label>
+                        <input type="number" class="form-control" id="height" name="height" step="0.1" min="100" max="250" required placeholder="Contoh: 165">
+                        <div class="invalid-feedback">⚠️ Tinggi badan tidak wajar (100-250 cm).</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="weight" class="form-label">Berat Badan (kg)</label>
+                        <input type="number" class="form-control" id="weight" name="weight" step="0.1" min="30" max="200" required placeholder="Contoh: 60">
+                        <div class="invalid-feedback">⚠️ Berat badan tidak wajar (30-200 kg).</div>
+                    </div>
+
+                    <!-- Data Klinis dengan Validasi -->
+                    <div class="col-md-6">
+                        <label for="systolic" class="form-label">Tekanan Darah Sistolik</label>
+                        <input type="number" class="form-control" id="systolic" name="systolic" min="80" max="250" required placeholder="Contoh: 140">
+                        <div class="invalid-feedback">⚠️ Nilai sistolik tidak wajar (80-250 mmHg).</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="diastolic" class="form-label">Tekanan Darah Diastolik</label>
+                        <input type="number" class="form-control" id="diastolic" name="diastolic" min="50" max="150" required placeholder="Contoh: 90">
+                        <div class="invalid-feedback">⚠️ Nilai diastolik tidak wajar (50-150 mmHg).</div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <label for="activity" class="form-label">Tingkat Aktivitas Fisik</label>
+                        <select class="form-select" id="activity" name="activity" required>
+                            <option value="" selected disabled>Pilih tingkat aktivitas</option>
+                            <option value="1">1 – Sangat ringan (jarang olahraga)</option>
+                            <option value="2">2 – Ringan (olahraga 1–3 hari/minggu)</option>
+                            <option value="3">3 – Sedang (olahraga 3–5 hari/minggu)</option>
+                            <option value="4">4 – Aktif (olahraga 6–7 hari/minggu)</option>
+                            <option value="5">5 – Sangat aktif (olahraga berat setiap hari)</option>
+                        </select>
+                        <div class="invalid-feedback">Tingkat aktivitas wajib dipilih.</div>
+                    </div>
+
+                    <!-- Pilihan Karbo -->
+                    <div class="col-12">
+                        <label for="rice_option" class="form-label">Pilihan Karbohidrat Pendamping</label>
+                        <select class="form-select" id="rice_option" name="rice_option">
+                            <option value="none" selected>Tanpa tambahan nasi</option>
+                            <option value="nasi_putih">Nasi Putih</option>
+                            <option value="nasi_merah">Nasi Merah</option>
+                            <option value="nasi_kuning">Nasi Kuning</option>
+                            <option value="nasi_uduk">Nasi Uduk</option>
+                        </select>
+                    </div>
+
+                    <!-- Alergi -->
+                    <div class="col-12 mt-2">
+                        <label class="form-label d-block mb-2">Alergi Makanan</label>
+                        <div class="allergy-group d-flex flex-wrap gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="allergy" value="ikan" id="al_ikan">
+                                <label class="form-check-label" for="al_ikan">🐟 Ikan</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="allergy" value="susu" id="al_susu">
+                                <label class="form-check-label" for="al_susu">🥛 Susu / Produk Susu</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="allergy" value="telur" id="al_telur">
+                                <label class="form-check-label" for="al_telur">🥚 Telur</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="allergy" value="kacang" id="al_kacang">
+                                <label class="form-check-label" for="al_kacang">🥜 Kacang</label>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <input type="text" class="form-control" name="allergy_text" placeholder="Alergi lainnya (pisahkan dengan koma)" id="allergy_text">
+                        </div>
+                    </div>
+
+
+
+                    <!-- Tombol Aksi -->
+                    <div class="col-12 mt-4">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <button type="submit" class="btn btn-submit" id="btnSubmit">🔍 DAPATKAN REKOMENDASI</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="reset" class="btn btn-reset" onclick="resetCustomFields()">🗑️ KOSONGKAN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Validasi & Reset -->
+    <script>
+        // ===== KONFIGURASI BATAS VALIDASI =====
+        const VALIDATION_RULES = {
+            age:      { min: 18,  max: 100, msg: 'Umur harus antara 18 - 100 tahun.' },
+            height:   { min: 100, max: 250, msg: '⚠️ Tinggi badan tidak wajar (100-250 cm).' },
+            weight:   { min: 30,  max: 200, msg: '⚠️ Berat badan tidak wajar (30-200 kg).' },
+            systolic: { min: 80,  max: 250, msg: '⚠️ Tekanan sistolik tidak wajar (80-250 mmHg).' },
+            diastolic:{ min: 50,  max: 150, msg: '⚠️ Tekanan diastolik tidak wajar (50-150 mmHg).' }
+        };
+
+        // ===== FUNGSI VALIDASI REAL-TIME =====
+        function validateField(input) {
+            const rules = VALIDATION_RULES[input.id];
+            if (!rules) return true;
+
+            const val = parseFloat(input.value);
+            const feedback = input.nextElementSibling;
+
+            if (input.value === '') {
+                input.classList.remove('is-invalid');
+                return false; // kosong = belum divalidasi
+            }
+
+            if (isNaN(val) || val < rules.min || val > rules.max) {
+                input.classList.add('is-invalid');
+                if (feedback) feedback.textContent = rules.msg;
+                return false;
+            } else {
+                input.classList.remove('is-invalid');
+                return true;
+            }
+        }
+
+        // Pasang event listener ke semua field yang punya aturan validasi
+        Object.keys(VALIDATION_RULES).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', () => validateField(el));
+                el.addEventListener('blur', () => validateField(el));
+            }
+        });
+
+        // ===== VALIDASI SAAT SUBMIT =====
+        document.getElementById('dietForm').addEventListener('submit', function(e) {
+            let isValid = true;
+
+            // Validasi field numerik
+            Object.keys(VALIDATION_RULES).forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !validateField(el)) isValid = false;
+            });
+
+            // Validasi select wajib
+            ['gender', 'activity'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.value) {
+                    el.classList.add('is-invalid');
+                    isValid = false;
+                } else if (el) {
+                    el.classList.remove('is-invalid');
+                }
+            });
+
+            // Cek logika medis: Sistolik harus > Diastolik
+            const sys = parseFloat(document.getElementById('systolic').value);
+            const dia = parseFloat(document.getElementById('diastolic').value);
+            const sysInput = document.getElementById('systolic');
+            const diaInput = document.getElementById('diastolic');
+
+            if (!isNaN(sys) && !isNaN(dia) && sys <= dia) {
+                sysInput.classList.add('is-invalid');
+                diaInput.classList.add('is-invalid');
+                sysInput.nextElementSibling.textContent = '⚠️ Sistolik harus lebih besar dari Diastolik.';
+                diaInput.nextElementSibling.textContent = '⚠️ Diastolik harus lebih kecil dari Sistolik.';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                // Scroll ke error pertama
+                const firstError = document.querySelector('.is-invalid');
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                // Gabungkan alergi sebelum submit
+                mergeAllergies();
+            }
+        });
+
+        // ===== RESET CUSTOM FIELDS =====
+        function resetCustomFields() {
+            document.getElementById('allergy_text').value = '';
+            document.querySelectorAll('.allergy-group input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        }
+
+        // ===== MERGE ALLERGIES =====
+        function mergeAllergies() {
+            const checkboxes = document.querySelectorAll('.allergy-group input[type="checkbox"]:checked');
+            const textInput = document.getElementById('allergy_text').value.trim();
+            let allergies = [];
+            checkboxes.forEach(cb => allergies.push(cb.value));
+            if (textInput) allergies.push(textInput);
+
+            let existingHidden = document.getElementById('allergy_combined');
+            if (!existingHidden) {
+                existingHidden = document.createElement('input');
+                existingHidden.type = 'hidden';
+                existingHidden.name = 'allergy';
+                existingHidden.id = 'allergy_combined';
+                document.getElementById('dietForm').appendChild(existingHidden);
+            }
+
+            checkboxes.forEach(cb => cb.removeAttribute('name'));
+            document.getElementById('allergy_text').removeAttribute('name');
+            existingHidden.value = allergies.join('|');
+            if (allergies.length === 0) existingHidden.value = '';
+        }
+
+
+        
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
