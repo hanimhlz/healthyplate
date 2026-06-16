@@ -959,6 +959,8 @@
     </div>
 
     <main class="result-container">
+
+    {% set natrium_limit = {1: 1200, 2: 800, 3: 400}.get(result.derajat, 2000) %}
         
         <!-- Header -->
         <div class="page-header">
@@ -980,8 +982,8 @@
             </div>
 
             <div class="info-card">
-                <span class="info-label">BMR / TDEE</span>
-                <span class="info-value">{{ result.bmr }} / {{ result.tdee }} kkal</span>
+                <span class="info-label">Batas Natrium</span>
+                <span class="info-value">{{ natrium_limit }} mg</span>
             </div>
 
             <div class="info-card clickable" onclick="openDetail()">
@@ -1301,7 +1303,6 @@
             {% set kol_limit = (result.batas['kolesterol_meal'] * 3 + result.batas['kolesterol_snack'] * 2) %}
             {% set gula_limit = 50 %}
             {% set lemak_limit = (0.25 * result.tdee) / 9 %}
-            {% set natrium_limit = {1: 1200, 2: 800, 3: 400}.get(result.derajat, 2000) %}
             {% set protein_need = (result.batas['protein_meal'] * 3 + result.batas['protein_snack'] * 2) %}
             {% set karbo_need = (result.batas['karbo_meal'] * 3 + result.batas['karbo_snack'] * 2) %}
             {% set serat_need = (result.batas['serat_meal'] * 3 + result.batas['serat_snack'] * 2) %}
@@ -1327,7 +1328,7 @@
                 <div class="detail-section limit">
                     <h3>Batas Maksimal Nutrisi (Harian)</h3>
                     <div class="detail-grid">
-                        <div><strong>Natrium</strong><span>&lt; {{ natrium_limit }} mg</span></div>
+                        <div><strong>Kalori</strong><span>&lt; {{ result.tdee }} kkal</span></div>
                         <div><strong>Gula</strong><span>&lt; {{ gula_limit }} g</span></div>
                         <div><strong>Lemak</strong><span>&lt; {{ lemak_limit | round(2) }} g</span></div>
                         <div><strong>Kolesterol</strong><span>&lt; {{ kol_limit | round(2) }} mg</span></div>
@@ -1418,6 +1419,8 @@
                 "Gula (G)": f['Gula (G)'] || 0,
                 "Serat (G)": f['Serat (G)'] || 0,
                 "Kalium (Mg)": f['Kalium (Mg)'] || 0,
+                "Karbohidrat (G)": f['Karbohidrat (G)'] || 0,
+                "Protein (G)": f['Protein (G)'] || 0,
                 "Bahan": f['Bahan'] || '-',
                 "Resep": f['Resep'] || '-'
             }));
