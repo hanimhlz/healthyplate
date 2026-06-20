@@ -430,8 +430,6 @@ def get_rice_data(df, rice_option):
     rice_map = {
         "nasi_putih": "nasi putih",
         "nasi_merah": "nasi merah",
-        "nasi_kuning": "nasi kuning",
-        "nasi_uduk": "nasi uduk",
     }
     search_term = rice_map.get(rice_option)
     if search_term is None:
