@@ -83,8 +83,6 @@ def recommend():
             "none": "Tidak ada",
             "nasi_putih": "Nasi Putih",
             "nasi_merah": "Nasi Merah",
-            "nasi_kuning": "Nasi Kuning",
-            "nasi_uduk": "Nasi Uduk",
         }
 
         user_input = {
@@ -105,8 +103,7 @@ def recommend():
         rice_label_map = {
             "nasi putih": "Nasi Putih",
             "nasi merah": "Nasi Merah",
-            "nasi kuning": "Nasi Kuning",
-            "nasi uduk": "Nasi Uduk",
+
         }
 
         for item in result.get("weekly_detail", []):
