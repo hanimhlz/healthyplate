@@ -453,7 +453,7 @@ kue wortel tanpa lapisan (gula),Snack,wortel; tepung; gula; telur,Panggang adona
 kukis almond oat (mama bear),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,109.94,2.0,6.0,5.0,11.0,2.0,0.0,400,0.0
 kukis butter,Snack,tepung; mentega; gula,Panggang adonan kukis,239.96,3.0,13.0,0.0,28.0,0.0,10.0,135.0,0.0
 kukis cokelat kacang (holland bakery),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,80.07,1.0,5.0,0.0,8.0,0.0,3.0,40.0,0.0
-kukis keju ( khong guan),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,80.07,0.0,3.0,0.0,13.0,0.0,3.0,400,0.0
+kukis keju ( khong guan),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,80.07,0.0,3.0,0.0,13.0,0.0,3.0,80.0,0.0
 kukis kelapa (kokola),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,59.99,1.0,2.0,0.0,9.0,0.0,3.0,400,0.0
 kukis mochachino (kokola),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,140.06,2.0,5.0,0.0,22.0,2.0,6.0,130.0,0.0
 kukis susu vanila (kokola),Snack,tidak tersedia / processed food / processed food / processed food / processed food,tidak tersedia / processed food / processed food / processed food / processed food,140.06,1.0,5.0,0.0,23.0,1.0,6.0,125.0,0.0
@@ -653,7 +653,7 @@ pecel sayur,Meal,sayuran 150 g; saus kacang 60 g,Sajikan sayuran 150 g dengan sa
 pempek kapal selam,Meal,ikan 120 g; tepung 80 g; telur 50 g,Rebus adonan ikan 120 g dan tepung 80 g berisi telur 50 g hingga matang,335.09,25.83,14.97,185.0,22.51,0.8,4.4,441.0,517.0
 pengganti krim (cair),Snack,tidak tersedia / processed food / processed food / processed food,Produk krim cair olahan siap pakai,137.91,1.01,10.11,0.0,11.54,0.0,11.54,80.0,194.0
 Pepaya,Snack,Tidak Tersedia,Tidak Tersedia,43.0,0.5,0.1,0.0,10.8,1.7,7.8,8.0,182.0
-peperoni,Snack,daging sapi 60 g; rempah 10 g,Masak daging sapi 60 g dengan rempah 10 g hingga matang,25.57,1.12,2.22,6.0,0.22,0.1,0.04,400,17.0
+peperoni,Snack,daging sapi 60 g; rempah 10 g,Masak daging sapi 60 g dengan rempah 10 g hingga matang,25.57,1.12,2.22,6.0,0.22,0.1,0.04,98.0,17.0
 pepes ayam,Meal,Ayam 100 g; Bawang merah 5 g; Bawang putih 3 g; Cabai 2 g; sejumput; Daun pisang 1 lembar,"Siapkan daun pisang, lumuri ayam dengan bumbu halus, bungkus rapat, kukus selama 20 menit hingga matang",103.49,10.96,6.13,32.0,0.66,0.3,0.03,74.0,115.0
 pepes ikan mas,Meal,Ikan mas 100 g; Bawang merah 5 g; Bawang putih 3 g; Cabai 2 g; sejumput; Daun pisang 1 lembar,"Lumuri ikan dengan bumbu halus, bungkus dengan daun pisang, kukus selama 15–20 menit hingga matang, sajikan hangat",98.23,13.21,4.63,46.0,0.16,0.0,0.02,191.0,239.0
 pepes jamur,Meal,Jamur 100 g; Bawang merah 5 g; Bawang putih 3 g; Cabai 2 g; sejumput; Daun pisang 1 lembar,"Campur jamur dengan bumbu halus, bungkus daun pisang, kukus selama 10–15 menit hingga matang, sajikan hangat",67.4,2.88,4.12,0.0,6.47,1.9,1.59,173.0,316.0
