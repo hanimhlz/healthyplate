@@ -242,7 +242,7 @@ def filter_makanan(df, batas, kategori, alergi=None):
     nasi_standalone = [
         "nasi putih", "nasi merah", "nasi kuning", "nasi coklat",
         "nasi uduk", "nasi liwet", "nasi jagung", "nasi samin",
-        "nasi ketan", "nasi tiwul", "nasi basmati", "nasi gurih",
+        "nasi ketan", "nasi tiwul", "nasi basmati", "nasi daun jeruk",
         "nasi pera", "nasi pulen", "nasi organik", "nasi hitam",
         "nasi cokelat", "nasi beras merah", "nasi beras hitam",
     ]
