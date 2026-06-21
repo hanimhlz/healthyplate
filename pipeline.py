@@ -67,7 +67,7 @@ BLACKLIST = [
     "pilus", "chitato", "chiki", "taro net", "tic tac", "corntoz",
     "thalasa", "coffee float", "mcflurry", "mcnugget", "mcspicy",
     "sweet and sour sauce", "iced coffee (mcd)", "chocolate sundae",
-    "ice cream cone (mcd)", "sausage patty (mcd)", "garuda", "rumput laut kering panggang",
+    "ice cream cone (mcd)", "sausage patty (mcd)",
 ]
 
 # ===== KEYWORD MAKANAN YANG TIDAK PERLU NASI =====
